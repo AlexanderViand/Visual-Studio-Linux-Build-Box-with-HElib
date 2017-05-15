@@ -1,4 +1,6 @@
 # Visual Studio Linux Build Box with HElib
+(Docker Hub users: read this on [Github](https://github.com/AlexanderViand/Visual-Studio-Linux-Build-Box-with-HElib) for working links)
+
 This repository contains instructions (and the required [Dockerfile](./Dockerfile)) for setting up a Visual Studio development environment for [HElib](https://github.com/shaih/HElib/)-based applications. See the documentation for the general [Visual Studio workflow](./readme_visualstudio.md) and for [using the dockerfile](./readme_dockerfile.md).
 
 This is based on a [docker image](https://hub.docker.com/r/ducatel/visual-studio-linux-build-box/) ([mirror](https://github.com/AlexanderViand/Visual-Studio-Linux-Build-Box)) from [David Ducatel](https://github.com/Ducatel). However, instead of basing off a default ubuntu 16.04 LTS image, this is based off of my [HElib docker image](https://hub.docker.com/r/alexanderviand/helib/) ([github](https://github.com/AlexanderViand/HElib)).
