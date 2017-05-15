@@ -9,7 +9,7 @@ This is based on a [docker image](https://hub.docker.com/r/ducatel/visual-studio
 1. To run a container, execute `docker run -d -p 12345:22 --security-opt seccomp:unconfined --name someshortname repo/name:latest` with the appropriate image name, e.g. `docker run -d -p 12345:22 --security-opt seccomp:unconfined --name buildbox alexanderviand/visual-studio-linux-build-box-with-helib:latest`
 1. This will "expose" the ssh server on `http://localhost:12345` with username `root` and password `toor` (defined by the VS linux build image)
 1. Use that login information as the "remote connection" for Visual Studio 2017
-1. To get all the include files needed for proper IntelliSense support in visual studio, navigate to a suitable folder and run `docker cp someshortname:/usr/local/include/ .` , e.g. `docker cp fastfacebox:/usr/local/include/ .` This will copy the include files for GMP, NTL and HElib into the current directory where it can be used as "Additional Include Directories" for Visual Studio
+1. To get all the include files needed for proper IntelliSense support in visual studio, navigate to a suitable folder and run `docker cp someshortname:/usr/local/include/ .` , e.g. `docker cp buildbox:/usr/local/include/ .` This will copy the include files for GMP, NTL and HElib into the current directory where it can be used as "Additional Include Directories" for Visual Studio
 
 
 
