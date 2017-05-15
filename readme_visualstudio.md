@@ -11,7 +11,7 @@ With Visual C++, the code is written and developed locally in Visual Studio with
 
 The linux build machine
 ---
-A dockerfile with all the required tools to work with Visual C++ out of the box is [available from a third party](https://hub.docker.com/r/ducatel/visual-studio-linux-build-box/) ([mirror](https://github.com/AlexanderViand/Visual-Studio-Linux-Build-Box)). The dockerfile in this repo is based on this, but includes HElib and its dependencies (via the [HElib image](https://hub.docker.com/r/alexanderviand/helib/)).
+A docker image with all the required tools to work with Visual C++ out of the box is [available from a third party](https://hub.docker.com/r/ducatel/visual-studio-linux-build-box/) ([mirror](https://github.com/AlexanderViand/Visual-Studio-Linux-Build-Box)). The dockerfile in this repo is based on this, but includes HElib and its dependencies (via the [HElib image](https://hub.docker.com/r/alexanderviand/helib/)).
 Alternatively, advanced users can set up an environment manually. Refer to the [Visual C++ documentation](http://aka.ms/vslinux) and the [HElib installation instructions](https://github.com/shaih/HElib/blob/master/INSTALL.txt) ([mirror](https://github.com/AlexanderViand/HElib/blob/master/INSTALL.txt)) for detailed information.
 The following will assume that you have a valid "remote" machine available.
 
@@ -25,14 +25,13 @@ Create a new "Linux Console Application" project (under Cross-platform->Linux, b
 Now, we need to set up the project to work with the external library (in our case, HElib). In the project properties,
 under "Linker->Input->Library Dependencies" we need to add the libraries we require, seperated by semicolons. Note that the order is important ([explanation](http://stackoverflow.com/questions/45135/why-does-the-order-in-which-libraries-are-linked-sometimes-cause-errors-in-gcc)). In our case, we need to have `fhe;ntl;gmp;m;pthread` as library dependencies.
 
-The FastFaceMinimal project uses two macros for in-depth debugging, `VERBOSE` and `VERIFY` which increase the amount of debug output and the amount of checks, respectively. (As of 2017-05-12_10:47MEZ the latter is not yet implemented).
-These can be enabled by providing them to the compiler, by setting Project Properties "C/C++ -> All Options -> Additional Options" to `-D VERBOSE -D VERIFY %(AdditionalOptions)`.
+Project specific note: The FastFaceMinimal project uses two macros for in-depth debugging, `VERBOSE` and `VERIFY` which increase the amount of debug output and the amount of checks, respectively. (As of 2017-05-12_10:47MEZ the latter is not yet implemented). These can be enabled by providing them to the compiler, by setting Project Properties "C/C++ -> All Options -> Additional Options" to `-D VERBOSE -D VERIFY %(AdditionalOptions)`.
 
 Under "Debugging->Debugging Mode", we recommend selecting `gdb` rather than `gdbserver`. This is because the latter seems to have issues stepping into HElib code because it doesn't know where to find the sources. It might also be helpful to add `-enable-pretty-printing` under "Debugging->Additional Debugger Commands".
 
 For debugging to properly step into the library sources, we need to make them available locally (e.g. clone HElib into a local repository). In the *Solution* Properties under "Common Properties -> Debug Source Files" add the folder that contains HElib.
 
-In order for IntelliSense to properly recognize classes and functions from the libraries we use, we need to make the include files available to Visual Studio. If you are using our HElibDocker setup (see instructions [above](#the-linux-build-machine)), then the include files will be in "HElibDocker/include". Assuming your project directory is at the same level as the HElibDocker folder, we should have `$(SolutionDir)..\HElibDocker\include;$(IncludePath)` in our Project Properties "VC++ Directories->Include Directories".
+In order for IntelliSense to properly recognize classes and functions from the libraries we use, we need to make the include files available to Visual Studio. If you have copied the includes to a folder `DIR` on the same level as your solution, then the include files will be in `DIR/include`. I.e. you should have `$(SolutionDir)..\DIR\include;$(IncludePath)` in the Project Properties "VC++ Directories->Include Directories".
 
  
 
